@@ -12,8 +12,34 @@ title: Blogging Like a Hacker
     <title>Document</title>
 </head>
 <body>
-    <h1>Links</h1>
-    <div id="links">links will go here!</div>
+    <div>User</div>
+    <div><input id="user" type="text"></div>
+
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCKhrlsgvJ0oiXF5xo6us1m8B0xGRApR88",
+    authDomain: "striblet-2c0ae.firebaseapp.com",
+    databaseURL: "https://striblet-2c0ae.firebaseio.com",
+    projectId: "striblet-2c0ae",
+    storageBucket: "striblet-2c0ae.appspot.com",
+    messagingSenderId: "472836326493",
+    appId: "1:472836326493:web:77ebb8c2ae8fdf49abb9b4",
+    measurementId: "G-8HJDG9DJ20"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 </body>
 </html>
   
