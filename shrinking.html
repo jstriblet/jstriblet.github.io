@@ -12,35 +12,53 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.html">Jonathan Striblet</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">Jonathan Striblet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="shrinking.html">Shrinking Media<span class="sr-only">(current)</span></a>
-            </li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="shrinking.html">Shrinking Media<span class="sr-only">(current)</span></a>
+        </li>
 
-            </ul>
+        </ul>
+    </div>
+</nav>
+
+<div class="row">&nbsp;</div>
+
+<div id="form" class="row justify-content-center">
+    <div class="col-7 align-self-center">
+        <div class="form-group">
+            <label for="rss">Subscription Rss</label>
+            <textarea type="text" class="form-control" id="rss" placeholder="Enter YouTube xml rss" rows="7"></textarea>
+            <small id="rssHelp" class="form-text text-muted">https://www.youtube.com/subscription_manager</small>
         </div>
-    </nav>
-
- <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
-
+        <button type="submit" class="btn btn-primary" onclick="getFeed()">Submit</button>
+    </div>
+</div>
 
 
+<script>
 
-<!-- Google Sign In API -->
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+function getFeed() {
+    let text = document.getElementById("rss").value;
+    console.log(link);
+    paseData(text)
 
+}
 
+function parseData(text) {
+    
+}
+
+</script>
 
 <!-- Firebase -->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
