@@ -11,8 +11,8 @@ function getJSONData(yourUrl) {
     return Httpreq.responseText;
 }
 
-// https://www.googleapis.com/youtube/v3/channels?part=snippet&id=UCxdCeHBUOlcCWr6RM8acEog&key=AIzaSyDFai3yYuXpS-Au96nD_no7revHUwaTwmU
-// https://www.googleapis.com/youtube/v3/videos?part=snippet&id=fw9BWOkYPjY&key=AIzaSyDFai3yYuXpS-Au96nD_no7revHUwaTwmU
+// https://www.googleapis.com/youtube/v3/channels?part=snippet&id=UCxdCeHBUOlcCWr6RM8acEog,UCoOae5nYA7VqaXzerajD0lg&key=KEY!!
+// https://www.googleapis.com/youtube/v3/videos?part=snippet&id=fw9BWOkYPjY&key=KEY!!
 
 function showVideoList(userid, writediv, maxnumbervideos, apikey) {
     try {
@@ -81,7 +81,7 @@ function parseData(text) {
 function getYouTubeVideos(channelIds) {
 
     for (let i = 0; i < channelIds.length; i++) {
-        showVideoList(channelIds[1], "videos", 4, "AIzaSyDFai3yYuXpS-Au96nD_no7revHUwaTwmU");
+        showVideoList(channelIds[1], "videos", 4, "KEY!!");
  
     }
 }
