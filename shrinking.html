@@ -38,27 +38,20 @@
         <div class="form-group">
             <label for="rss">Subscription Rss</label>
             <textarea type="text" class="form-control" id="rss" placeholder="Enter YouTube xml rss" rows="7"></textarea>
-            <small id="rssHelp" class="form-text text-muted">https://www.youtube.com/subscription_manager</small>
+            <small id="rssHelp" class="form-text text-muted"> <a href="https://www.youtube.com/subscription_manager">https://www.youtube.com/subscription_manager</a></small>
         </div>
-        <button type="submit" class="btn btn-primary" onclick="getFeed()">Submit</button>
+        <button type="submit" id="submit" class="btn btn-primary">Submit</button>
     </div>
 </div>
 
+<div id="videos"></div>
 
-<script>
 
-function getFeed() {
-    let text = document.getElementById("rss").value;
-    console.log(link);
-    paseData(text)
+<!-- Unique ID for users -->
+<script src="uuid.js"></script>
 
-}
-
-function parseData(text) {
-    
-}
-
-</script>
+<!-- JS App Methods -->
+<script src="shrinking-app.js"></script>
 
 <!-- Firebase -->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -66,40 +59,7 @@ function parseData(text) {
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
-
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyCKhrlsgvJ0oiXF5xo6us1m8B0xGRApR88",
-    authDomain: "striblet-2c0ae.firebaseapp.com",
-    databaseURL: "https://striblet-2c0ae.firebaseio.com",
-    projectId: "striblet-2c0ae",
-    storageBucket: "striblet-2c0ae.appspot.com",
-    messagingSenderId: "472836326493",
-    appId: "1:472836326493:web:77ebb8c2ae8fdf49abb9b4",
-    measurementId: "G-8HJDG9DJ20"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.database();
-
-
-    function saveToFirebase(email) {
-        var emailObject = {
-            email: email
-        };
-
-        firebase.database().ref('subscription-entries').push().set(emailObject)
-            .then(function(snapshot) {
-                success(); // some success method
-            }, function(error) {
-                console.log('error' + error);
-                error(); // some error method
-        });
-    }
-
-</script>
-
+<script src="firebase-config.js"></script>
 
 <!-- Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
