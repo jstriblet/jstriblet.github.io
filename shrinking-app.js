@@ -5,7 +5,7 @@ function getJSONData(yourUrl) {
         Httpreq.open("GET", yourUrl, false);
         Httpreq.send(null);
     } catch (ex) {
-        alert(ex.message);
+        alert(ex.message);  
     }
     // console.log(Httpreq.responseText)
     return Httpreq.responseText;
