@@ -13,7 +13,7 @@ function getJSONData(yourUrl) {
 
 // https://www.googleapis.com/youtube/v3/channels?part=snippet&id=UCxdCeHBUOlcCWr6RM8acEog,UCoOae5nYA7VqaXzerajD0lg&key=KEY!!
 // https://www.googleapis.com/youtube/v3/videos?part=snippet&id=fw9BWOkYPjY&key=KEY!!
-// https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId=UCxdCeHBUOlcCWr6RM8acEog&maxResults=4&key=AIzaSyAkrJgYVSfMOODL6ALueUnFQPpfL04skSM
+// https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId=UCxdCeHBUOlcCWr6RM8acEog&maxResults=4&key=
 
 // function showVideoList(userid, writediv, maxnumbervideos, apikey) {
 //     try {
