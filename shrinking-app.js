@@ -92,7 +92,7 @@ function parseData(text) {
 
     channelIds = xmlLinks.map(el => {
         return el.split("channel_id=")[1];
-    })
+    }) 
 
     saveXmlLinks(channelIds);
     getYouTubeVideos(channelIds);
