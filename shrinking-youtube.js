@@ -44,7 +44,7 @@ function videoSource(apiKey, channelIds) {
             }
         }
     }
-
+  
     savedState = {...savedState, ...tempSavedState};
 
     console.log(from);
