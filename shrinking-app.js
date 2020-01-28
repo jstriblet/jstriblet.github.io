@@ -19,5 +19,5 @@ function parseData(text) {
         return el.split("channel_id=")[1];
     }) 
 
-    videoSource('---',channelIds);
+    videoSource('___',channelIds);
 }

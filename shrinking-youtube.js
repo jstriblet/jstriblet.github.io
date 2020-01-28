@@ -14,47 +14,81 @@ function videoSource(apiKey, channelIds) {
     let dd = String(today.getDate()).padStart(2, '0');
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     let yyyy = today.getFullYear();
-    let lastRefreshedDate = localStorage.getItem('lastRefreshDate');
+    today = yyyy + '-' + mm + '-' + dd;
+
+    let savedState = JSON.parse(localStorage.getItem('savedState')) || {date: { [today] : {videoSource : {}, channelSource: {}}}};
+
+    let lastRefreshedDate = JSON.parse(localStorage.getItem('lastRefreshDate'));
+    let localChannels = JSON.parse(localStorage.getItem('channelIds'));
+    let localVideos = JSON.parse(localStorage.getItem('videoSource'));
     let channelSource;
     let videoSource;
-    today = mm + '/' + dd + '/' + yyyy;
+    let from = '';
+    
 
-    if (localStorage.getItem('channelIds') && localStorage.getItem('videoSource') && today === lastRefreshedDate 
-        && JSON.parse(localStorage.getItem('channelIds')).length && JSON.parse(localStorage.getItem('videoSource')).length) {
+    if (localChannels && localVideos && today == lastRefreshedDate) {
         channelSource = JSON.parse(localStorage.getItem('channelIds'));
         videoSource = JSON.parse(localStorage.getItem('videoSource'));
+        from = 'local storage';
     } else {
         channelSource = channelIds;
-        videoSource = getVideoList(apiKey, channelSource);
+        videoSource = getVideoList(apiKey, channelSource, today);
+        from = 'api call';
     }
+
+    tempSavedState = {
+        date: {
+            [today] : {
+                'videoSource' : videoSource,
+                'channelSource' : channelSource
+            }
+        }
+    }
+
+    savedState = {...savedState, ...tempSavedState};
+
+    console.log(from);
+    console.log(today == lastRefreshedDate);
+    console.log(localChannels);
+    console.log(localVideos);
+    console.log(savedState);
+
 
     localStorage.setItem('lastRefreshDate', JSON.stringify(today));
     localStorage.setItem('channelIds', JSON.stringify(channelIds));
     localStorage.setItem('videoSource', JSON.stringify(videoSource));
-
-    // console.log(today, localStorage.getItem('lastRefreshDate'));
-    // console.log(channelSource);
-    // console.log(videoSource);
-
     renderVideos(videoSource, 'videos');
 }
 
-function getVideoList (apiKey, channelSource) {
+function getVideoList (apiKey, channelSource, today) {
     let videos = [];
-    let videoinfo;
 
-    // for ( let i = 0; i < 5; i++) {
-    //     videoinfo = JSON.parse(getJSONData("https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId=" + channelSource[i] + "&maxResults=1&key=" + apiKey));
-    //     videos.push(videoinfo.items[0].id.videoId)
-    // }
-    videos = ['fw9BWOkYPjY', 'VpMwaVM8ZSc', 'RI5JBOsS3AY', 'dQS_kmYz-Bs'];
+    for ( let i = 0; i < channelSource.length; i++) {
+        let activities = JSON.parse(getJSONData("https://www.googleapis.com/youtube/v3/activities?part=snippet&publishedAfter=" + today + "T00:00:00.0Z&channelId=" + channelSource[i] + "&maxResults=1&key=" + apiKey));
+        let numItems = activities.items.length;
+
+        if (numItems && activities.items[0].snippet.type === "upload") {
+            let video = activities.items[0].snippet.thumbnails.default.url.split("/")[4];
+            videos.push(video);
+        }
+    }
+    // videos = ['fw9BWOkYPjY', 'VpMwaVM8ZSc', 'RI5JBOsS3AY', 'dQS_kmYz-Bs']; //Place Holder Videos
     return videos;
 }
 
 function renderVideos (videos, writediv) {
+
+    let watchedVideos = [].concat(JSON.parse(localStorage.getItem('watchedVideos')));
+
+    videos = videos.filter(el => { 
+        console.log(watchedVideos.indexOf(el));
+        console.log(el);
+        return -1 === watchedVideos.indexOf(el)
+        });
+
     document.getElementById(writediv).innerHTML = '';
     for (var i = 0; i < videos.length; i++) {
-        document.getElementById(writediv).innerHTML += "<div id='player_" + videos[i]+ "' class='p-4'></div>";
+        document.getElementById(writediv).innerHTML += "<div class='row'><div id='player_" + videos[i]+ "' class='p-4 align-self-center'></div></div>";
     }
 
     // create youtube players
@@ -62,55 +96,41 @@ function renderVideos (videos, writediv) {
         let player = [];
         for (var j = 0; j < videos.length; j++) {  
             player[j] = new YT.Player('player_' + videos[j], {
-            height: '390',
+            height: '480',
             width: '640',
             videoId: videos[j],
             playerVars: {
                 modestbranding: 1,
                 rel: 0
             },
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
+            events: {'onStateChange': onPlayerStateChange}
             });
         }
     }
+    
     onYouTubePlayerAPIReady();
 
     // when video ends
     function onPlayerStateChange(event) {   
-        let duration = event.target.getDuration();
-        let currentTime = event.target.getCurrentTime();
+        let videoDuration = event.target.getDuration();
+        let videoCurrentTime = event.target.getCurrentTime();
+        let watchedVideos = [].concat(JSON.parse(localStorage.getItem('watchedVideos')));
 
         if(event.data === 0) {            
-            //console.log('video done');
             event.target.a.classList.add("fadeOut","animated");
+
             setTimeout(function(){ event.target.a.remove(); }, 1000);
-        // } else if (currentTime > (duration - (duration/9))) {
+
+            console.log(event.target.a.id.split('player_')[1]);
+
+            watchedVideos.push(event.target.a.id.split('player_')[1]);
+
+            localStorage.setItem('watchedVideos', JSON.stringify(watchedVideos));
+
+        // } else if (videoCurrentTime > (videoDuration - (videoDuration/9))) {
         //     //console.log('Youve watched enough!');
         //     event.target.a.classList.add("fadeOut","animated");
         //     setTimeout(function(){ event.target.a.remove(); }, 1000);
         }
     }
 }
-
-
-// function showVideoList(userid, writediv, maxnumbervideos, apiKey) {
-//     document.getElementById(writediv).innerHTML = '';
-//     try {
-//         //var videoinfo = JSON.parse(getJSONData("https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId=" + userid + "&maxResults=" + maxnumbervideos + "&key=" + apiKey));
-//         //var videos = videoinfo.items;
-//         //var videocount = videoinfo.pageInfo.totalResults;
-//     let videos = [1, 2, 3, 4];
-//     let videoid = ['fw9BWOkYPjY', 'VpMwaVM8ZSc', 'RI5JBOsS3AY', 'dQS_kmYz-Bs'];
-//         // video listing
-//         for (var i = 0; i < videos.length; i++) {
-//             document.getElementById(writediv).innerHTML += "<div id='video_" + videoid[i]+ "' class='p-4'>"
-//                 + "<iframe width='560' height='315' src='https://www.youtube.com/embed/" + videoid[i] + "' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"
-//                 + "</div>";
-//         }  
-//     } catch(ex) {
-
-//     }
-
-// }
