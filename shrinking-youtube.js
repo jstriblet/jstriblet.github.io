@@ -25,7 +25,6 @@ function videoSource(apiKey, channelIds) {
     let videoSource;
     let from = '';
     
-
     if (localChannels && localVideos && today == lastRefreshedDate) {
         channelSource = JSON.parse(localStorage.getItem('channelIds'));
         videoSource = JSON.parse(localStorage.getItem('videoSource'));
