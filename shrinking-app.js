@@ -4,12 +4,12 @@ document.querySelector('#submit').addEventListener('click', (e) => {
 
     if (document.getElementById("rss").value) {
         document.getElementById("collapseBtn").click();// close text box
+        
         // Do Something to add "working" throbber (maybe a progress bar?) (Replace text on button instead?)
-        console.log('here');
         document.getElementById('videos').innerHTML = '<div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span></div>';
 
         // Get Videos 
-        setTimeout(function(){ //Timeout needed for brouser to render throbber (spinner to screen)
+        setTimeout(function(){ //Timeout needed for brouser to render throbber (spinner) to screen
             channelIds = parseData(document.getElementById("rss").value);
             videoSource('___',channelIds);
             }, 1000);
