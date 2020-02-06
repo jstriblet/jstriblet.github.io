@@ -61,4 +61,4 @@ function parseData(text) {
 }   
 
 
-'https://www.googleapis.com/youtube/v3/subscriptions?channelId=UCZYsmT86LpfrK4fC5AI9TMg&part=contentDetails&key=AIzaSyAkrJgYVSfMOODL6ALueUnFQPpfL04skSM'
+'https://www.googleapis.com/youtube/v3/subscriptions?channelId=&part=contentDetails&k'
