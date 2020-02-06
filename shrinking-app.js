@@ -1,17 +1,45 @@
 // Listen for submit click
 document.querySelector('#submit').addEventListener('click', (e) => { 
     let channelIds;
+    let userChannelID = "";
 
-    if (document.getElementById("rss").value) {
+    if (true) {
         document.getElementById("collapseBtn").click();// close text box
         
-        // Do Something to add "working" throbber (maybe a progress bar?) (Replace text on button instead?)
+        // Render "working" throbber
         document.getElementById('videos').innerHTML = '<div class="spinner-border text-primary" role="status"> <span class="sr-only">Loading...</span></div>';
 
-        // Get Videos 
-        setTimeout(function(){ //Timeout needed for brouser to render throbber (spinner) to screen
-            channelIds = parseData(document.getElementById("rss").value);
-            videoSource('___',channelIds);
+        // userChannelID = document.getElementById("userChannelId").value;
+
+
+        // Get Subscriptions then Videos 
+        setTimeout(function(){ //Timeout needed for brouser to render throbber to screen
+
+            var provider = new firebase.auth.GoogleAuthProvider();
+
+            firebase.auth().signInWithPopup(provider)
+            //.then(function(result) {
+            // // This gives you a Google Access Token. You can use it to access the Google API.
+            // var token = result.credential.accessToken;
+            // // The signed-in user info.
+            // var user = result.user;
+            // // ...
+            // }).catch(function(error) {
+            // // Handle Errors here.
+            // var errorCode = error.code;
+            // var errorMessage = error.message;
+            // // The email of the user's account used.
+            // var email = error.email;
+            // // The firebase.auth.AuthCredential type that was used.
+            // var credential = error.credential;
+            // // ...
+            // });
+
+
+
+
+            // channelIds = parseData(document.getElementById("rss").value);
+            // videoSource('___',channelIds);
             }, 1000);
     }
 });
@@ -31,3 +59,6 @@ function parseData(text) {
 
     return channelIds;
 }   
+
+
+'https://www.googleapis.com/youtube/v3/subscriptions?channelId=UCZYsmT86LpfrK4fC5AI9TMg&part=contentDetails&key=AIzaSyAkrJgYVSfMOODL6ALueUnFQPpfL04skSM'
